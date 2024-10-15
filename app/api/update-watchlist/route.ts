@@ -14,6 +14,9 @@ export async function POST(request: Request) {
       where: {
         id: listingId,
       },
+      include: {
+        watchers: true,
+      },
     });
 
     const addToWatchList = async () => {
@@ -26,17 +29,20 @@ export async function POST(request: Request) {
             push: listingId,
           },
         },
-      });
-      await prisma.listing.update({
-        where: {
-          id: listingId,
-        },
-        data: {
-          watchersIds: {
-            push: currentUser?.id,
-          },
+        include: {
+          watchList: true,
         },
       });
+      // await prisma.listing.update({
+      //   where: {
+      //     id: listingId,
+      //   },
+      //   data: {
+      //     watchersIds: {
+      //       push: currentUser?.id,
+      //     },
+      //   },
+      // });
 
       console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
     };
