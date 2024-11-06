@@ -3,8 +3,12 @@
 import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import MessageInput from "./MessageInput";
+import useListing from "@/app/hooks/useListing";
 
 const Form = () => {
+  const { listingId } = useListing();
+  console.log(listingId);
+
   const {
     register,
     handleSubmit,
@@ -19,7 +23,7 @@ const Form = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("comment", "", { shouldValidate: true });
     console.log(data);
-    axios.post("/api/comment", data);
+    axios.post("/api/comment", { ...data, listingId });
   };
 
   return (

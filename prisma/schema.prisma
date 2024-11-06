@@ -13,30 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id             String    @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String?   @unique
-  emailVerified  DateTime?
-  image          String?
-  hashedPassword String?
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
-
-  conversationIds String[]       @db.ObjectId
-  conversations   Conversation[] @relation(fields: [conversationIds], references: [id])
-
-  seenMessageIds String[]  @db.ObjectId
-  seenMessages   Message[] @relation("Seen", fields: [seenMessageIds], references: [id])
-
-  accounts Account[]
-  messages Message[]
-  listings Listing[]
-
-  watchListIds String[]  @db.ObjectId
-  watchList    Listing[] @relation(name: "watchlist", fields: [watchListIds], references: [id])
-}
-
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
   type              String
@@ -56,21 +32,57 @@ model Account {
   @@unique([provider, providerAccountId])
 }
 
-model Conversation {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
-  createdAt     DateTime @default(now())
-  lastMessageAt DateTime @default(now())
-  name          String?
-  isGroup       Boolean?
+model User {
+  id             String    @id @default(auto()) @map("_id") @db.ObjectId
+  name           String?
+  email          String?   @unique
+  emailVerified  DateTime?
+  image          String?
+  hashedPassword String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  messagesIds String[]  @db.ObjectId
-  messages    Message[]
+  listingsCommentedOnIds String[]  @db.ObjectId
+  listingsCommentedOn    Listing[] @relation(name: "commentedOn", fields: [listingsCommentedOnIds], references: [id])
 
-  userIds String[] @db.ObjectId
-  users   User[]   @relation(fields: [userIds], references: [id])
+  seenCommentIds String[]  @db.ObjectId
+  seenComments   Comment[] @relation("Seen", fields: [seenCommentIds], references: [id])
+
+  accounts         Account[]
+  comments         Comment[]
+  listingsUploaded Listing[] @relation(name: "uploaded")
+
+  watchListIds String[]  @db.ObjectId
+  watchList    Listing[] @relation(name: "watchlist", fields: [watchListIds], references: [id])
 }
 
-model Message {
+model Listing {
+  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  year          Int
+  make          String
+  model         String
+  miles         Int
+  price         Int
+  image         String?
+  location      String
+  description   String
+  createdAt     DateTime @default(now())
+  lastCommentAt DateTime @default(now())
+
+  userId String? @db.ObjectId
+  user   User?   @relation(name: "uploaded", fields: [userId], references: [id], onDelete: Cascade)
+
+  watchersIds String[] @db.ObjectId
+  watchers    User[]   @relation(name: "watchlist", fields: [watchersIds], references: [id])
+
+  commentsIds String[]  @db.ObjectId
+  comments    Comment[]
+
+  commenterIds String[] @db.ObjectId
+  commenters   User[]   @relation(name: "commentedOn", fields: [commenterIds], references: [id])
+}
+
+model Comment {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   body      String?
   image     String?
@@ -79,26 +91,23 @@ model Message {
   seenIds String[] @db.ObjectId
   seen    User[]   @relation("Seen", fields: [seenIds], references: [id])
 
-  conversationId String       @db.ObjectId
-  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  listingId String  @db.ObjectId
+  listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 
-  senderId String? @db.ObjectId
-  sender   User?   @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  authorId String? @db.ObjectId
+  author   User?   @relation(fields: [authorId], references: [id], onDelete: Cascade)
 }
 
-model Listing {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
-  year        Int
-  make        String
-  model       String
-  miles       Int
-  price       Int
-  description String
-  createdAt   DateTime @default(now())
+// model Conversation {
+//   id            String   @id @default(auto()) @map("_id") @db.ObjectId
+//   createdAt     DateTime @default(now())
+//   lastCommentAt DateTime @default(now())
+//   name          String?
+//   isGroup       Boolean?
 
-  userId String? @db.ObjectId
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+//   commentsIds String[]  @db.ObjectId
+//   comments    Comment[]
 
-  watchersIds String[] @db.ObjectId
-  watchers    User[]   @relation(name: "watchlist", fields: [watchersIds], references: [id])
-}
+//   userIds String[] @db.ObjectId
+//   users   User[]   @relation(fields: [userIds], references: [id])
+// }
