@@ -22,17 +22,30 @@ export async function POST(request: Request) {
     const addToWatchList = async () => {
       await prisma.user.update({
         where: {
-          id: currentUser?.id,
+          id: currentUser.id,
         },
         data: {
-          watchListIds: {
-            push: listingId,
+          watchList: {
+            connect: {
+              id: listingId,
+            },
           },
         },
-        include: {
-          watchList: true,
-        },
       });
+
+      // await prisma.user.update({
+      //   where: {
+      //     id: currentUser?.id,
+      //   },
+      //   data: {
+      //     watchListIds: {
+      //       push: listingId,
+      //     },
+      //   },
+      //   include: {
+      //     watchList: true,
+      //   },
+      // });
       // await prisma.listing.update({
       //   where: {
       //     id: listingId,
@@ -43,32 +56,31 @@ export async function POST(request: Request) {
       //     },
       //   },
       // });
-
-      console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
+      // console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
     };
 
     const removeFromWatchList = async () => {
-      await prisma.user.update({
-        where: {
-          id: currentUser?.id,
-        },
-        data: {
-          watchListIds: {
-            set: currentUser?.watchListIds.filter((id) => id !== listingId),
-          },
-        },
-      });
-      await prisma.listing.update({
-        where: {
-          id: listingId,
-        },
-        data: {
-          watchersIds: {
-            set: listing?.watchersIds.filter((id) => id !== currentUser?.id),
-          },
-        },
-      });
-      console.log(`Removed ${listingId} (${listing?.make}) from watchlist`);
+      // await prisma.user.update({
+      //   where: {
+      //     id: currentUser?.id,
+      //   },
+      //   data: {
+      //     watchListIds: {
+      //       set: currentUser?.watchListIds.filter((id) => id !== listingId),
+      //     },
+      //   },
+      // });
+      // await prisma.listing.update({
+      //   where: {
+      //     id: listingId,
+      //   },
+      //   data: {
+      //     watchersIds: {
+      //       set: listing?.watchersIds.filter((id) => id !== currentUser?.id),
+      //     },
+      //   },
+      // });
+      // console.log(`Removed ${listingId} (${listing?.make}) from watchlist`);
     };
 
     if (currentUser?.watchListIds.includes(listingId)) {

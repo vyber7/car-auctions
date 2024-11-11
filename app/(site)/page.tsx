@@ -33,6 +33,7 @@ export default async function Home() {
                 model={listing.model}
                 miles={listing.miles}
                 price={listing.price}
+                location={listing.location}
                 description={listing.description}
                 watchersIds={listing.watchersIds}
                 currentUser={currentUser?.id as string}

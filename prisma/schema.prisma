@@ -57,7 +57,7 @@ model User {
 }
 
 model Listing {
-  id            String   @id @default(auto()) @map("_id") @db.ObjectId
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
   year          Int
   make          String
   model         String
@@ -66,8 +66,8 @@ model Listing {
   image         String?
   location      String
   description   String
-  createdAt     DateTime @default(now())
-  lastCommentAt DateTime @default(now())
+  createdAt     DateTime  @default(now())
+  lastCommentAt DateTime? @default(now())
 
   userId String? @db.ObjectId
   user   User?   @relation(name: "uploaded", fields: [userId], references: [id], onDelete: Cascade)
@@ -94,8 +94,8 @@ model Comment {
   listingId String  @db.ObjectId
   listing   Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
 
-  authorId String? @db.ObjectId
-  author   User?   @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 // model Conversation {

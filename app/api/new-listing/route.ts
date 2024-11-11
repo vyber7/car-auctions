@@ -24,12 +24,20 @@ export async function POST(req: Request) {
 
     console.log("Server Data: ", body);
 
-    const { year, make, model, miles, price, description } = body;
+    const { year, make, model, miles, price, location, description } = body;
 
     console.log("User: ", currentUser);
 
     //console.log(year, miles, price);
-    if (!year || !make || !model || !miles || !price || !description) {
+    if (
+      !year ||
+      !make ||
+      !model ||
+      !miles ||
+      !price ||
+      !location ||
+      !description
+    ) {
       return new NextResponse("Missing Information", { status: 400 });
     }
 
@@ -39,6 +47,7 @@ export async function POST(req: Request) {
       model,
       miles: +miles,
       price: +price,
+      location,
       description,
     };
     console.log("Listing to Create: ", listing);
@@ -50,6 +59,7 @@ export async function POST(req: Request) {
         model: listing.model,
         price: listing.price,
         miles: listing.miles,
+        location: listing.location,
         description: listing.description,
       },
     });

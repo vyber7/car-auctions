@@ -15,6 +15,7 @@ interface ListingProps {
   model: string;
   miles: number;
   price: number;
+  location: string;
   description: string;
   watchersIds: string[];
   currentUser: string | undefined;
@@ -27,6 +28,7 @@ const Listing: React.FC<ListingProps> = ({
   model,
   miles,
   price,
+  location,
   description,
   watchersIds,
   currentUser,
@@ -77,7 +79,7 @@ const Listing: React.FC<ListingProps> = ({
       </div>
       <div className="text-sm p-2 pt-0">
         6-Speed Manual, V12 Power, California-Owned, Some Modifications
-        <span className="block text-gray-500">Santa Cruz, CA 95060</span>
+        <span className="block text-gray-500">{location}</span>
       </div>
       {/* <div className="relative px-3 pb-8 lg:w-1/2">
         <p className="relative h-48 overflow-hidden after:absolute after:bottom-0 after:left-0 after:h-20 after:w-full after:bg-gradient-to-t after:from-white ">
