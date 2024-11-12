@@ -33,54 +33,24 @@ export async function POST(request: Request) {
         },
       });
 
-      // await prisma.user.update({
-      //   where: {
-      //     id: currentUser?.id,
-      //   },
-      //   data: {
-      //     watchListIds: {
-      //       push: listingId,
-      //     },
-      //   },
-      //   include: {
-      //     watchList: true,
-      //   },
-      // });
-      // await prisma.listing.update({
-      //   where: {
-      //     id: listingId,
-      //   },
-      //   data: {
-      //     watchersIds: {
-      //       push: currentUser?.id,
-      //     },
-      //   },
-      // });
-      // console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
+      console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
     };
 
     const removeFromWatchList = async () => {
-      // await prisma.user.update({
-      //   where: {
-      //     id: currentUser?.id,
-      //   },
-      //   data: {
-      //     watchListIds: {
-      //       set: currentUser?.watchListIds.filter((id) => id !== listingId),
-      //     },
-      //   },
-      // });
-      // await prisma.listing.update({
-      //   where: {
-      //     id: listingId,
-      //   },
-      //   data: {
-      //     watchersIds: {
-      //       set: listing?.watchersIds.filter((id) => id !== currentUser?.id),
-      //     },
-      //   },
-      // });
-      // console.log(`Removed ${listingId} (${listing?.make}) from watchlist`);
+      await prisma.user.update({
+        where: {
+          id: currentUser.id,
+        },
+        data: {
+          watchList: {
+            disconnect: {
+              id: listingId,
+            },
+          },
+        },
+      });
+
+      console.log(`Removed ${listingId} (${listing?.make}) from watchlist`);
     };
 
     if (currentUser?.watchListIds.includes(listingId)) {
