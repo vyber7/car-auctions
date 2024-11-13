@@ -2,11 +2,17 @@
 
 import axios from "axios";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import MessageInput from "./MessageInput";
-import useListing from "@/app/hooks/useListing";
+import CommentInput from "./CommentInput";
+//import useListing from "@/app/hooks/useListing";
+import toast from "react-hot-toast";
 
-const Form = () => {
-  const { listingId } = useListing();
+interface FormProps {
+  listingId: string;
+}
+
+const Form: React.FC<FormProps> = ({ listingId }) => {
+  //const { listingId } = useListing();
+
   console.log(listingId);
 
   const {
@@ -23,13 +29,19 @@ const Form = () => {
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("comment", "", { shouldValidate: true });
     console.log(data);
-    axios.post("/api/comment", { ...data, listingId });
+    axios
+      .post("/api/comments", { ...data, listingId })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch(() => toast.error("Something went wrong!"));
+    //.finally(() => setIsLoading(false));
   };
 
   return (
     <div className="mb-2 p-4 border shadow-md rounded-md shadow-gray-400">
       <form onSubmit={handleSubmit(onSubmit)}>
-        <MessageInput
+        <CommentInput
           id="comment"
           register={register}
           errors={errors}

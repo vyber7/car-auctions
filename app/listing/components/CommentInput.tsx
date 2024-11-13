@@ -2,7 +2,7 @@
 import React from "react";
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
-interface MessageInputProps {
+interface CommentInputProps {
   id: string;
   register: UseFormRegister<FieldValues>;
   type?: string;
@@ -11,7 +11,7 @@ interface MessageInputProps {
   errors: FieldErrors;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({
+const CommentInput: React.FC<CommentInputProps> = ({
   id,
   register,
   type,
@@ -31,4 +31,4 @@ const MessageInput: React.FC<MessageInputProps> = ({
   );
 };
 
-export default MessageInput;
+export default CommentInput;

@@ -8,6 +8,7 @@ import Title from "@/app/components/Title";
 import Form from "../components/Form";
 import Description from "../components/Description";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import Body from "../components/Body";
 
 const Listing = async ({ params }: Params) => {
   const { id } = params;
@@ -25,7 +26,7 @@ const Listing = async ({ params }: Params) => {
     return;
   }
 
-  const { year, make, model, miles, price, description } = listing;
+  const { year, make, model, miles, price, location, description } = listing;
 
   return (
     <div className="m-auto mt-11 flex max-w-5xl">
@@ -50,6 +51,8 @@ const Listing = async ({ params }: Params) => {
           <Description description={description} />
         </div>
 
+        <Body />
+
         <div>
           {!currentUser && (
             <p className="text-red-500">Please log in to leave a comment</p>
@@ -57,7 +60,7 @@ const Listing = async ({ params }: Params) => {
           {currentUser && (
             <>
               <h1>Leave a comment</h1>
-              <Form />
+              <Form listingId={id} />
             </>
           )}
         </div>
@@ -67,6 +70,7 @@ const Listing = async ({ params }: Params) => {
         <ul className="rounded-md bg-gray-400 p-2 h-[378px]">
           <li>Miles: {miles}</li>
           <li>Price: ${price}</li>
+          <li>Location: {location}</li>
         </ul>
         <h1 className="font-bold">Similar Auctions</h1>
       </aside>
