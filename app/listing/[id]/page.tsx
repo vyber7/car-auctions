@@ -51,7 +51,7 @@ const Listing = async ({ params }: Params) => {
           <Description description={description} />
         </div>
 
-        <Body />
+        <Body listingId={id} />
 
         <div>
           {!currentUser && (
