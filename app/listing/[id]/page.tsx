@@ -51,19 +51,18 @@ const Listing = async ({ params }: Params) => {
           <Description description={description} />
         </div>
 
-        <Body listingId={id} />
-
         <div>
           {!currentUser && (
             <p className="text-red-500">Please log in to leave a comment</p>
           )}
           {currentUser && (
             <>
-              <h1>Leave a comment</h1>
+              <h1>Comments and Bids</h1>
               <Form listingId={id} />
             </>
           )}
         </div>
+        <Body listingId={id} />
         {/*<VehicleListing />*/}
       </main>
       <aside className="hidden md:block md:w-2/12 md:pr-2 pt-[4.25rem]">
