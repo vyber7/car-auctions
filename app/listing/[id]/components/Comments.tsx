@@ -1,12 +1,13 @@
 //import getCurrentUser from "@/app/actions/getCurrentUser";
 //import Avatar from "@/app/components/Avatar";
 import prisma from "@/app/libs/prismadb";
+import Form from "./Form";
 
-interface BodyProps {
+interface CommentsProps {
   listingId: string;
 }
 
-const Body: React.FC<BodyProps> = async ({ listingId }) => {
+const Comments: React.FC<CommentsProps> = async ({ listingId }) => {
   //const currentUser = await getCurrentUser();
 
   const comments = await prisma.comment.findMany({
@@ -24,21 +25,26 @@ const Body: React.FC<BodyProps> = async ({ listingId }) => {
   return (
     <div className="mb-2 p-4 border shadow-md rounded-md shadow-gray-400">
       <h1 className="pb-4">Comments & Bids</h1>
+      <Form listingId={listingId} />
       <ul className="flex flex-col gap-2">
         {comments.map((comment) => {
           let date = comment.createdAt.toDateString();
           date = date.slice(4, 10);
+          let name = comment.user?.name?.split(" ")[0];
+          const capitalize = (str: string) => {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+          };
 
           return (
-            <li key={comment.id} className="flex justify-start">
-              <div className="font-bold p-2 pl-0 w-1/5 text-right">
-                {comment.user?.name}
-              </div>
-              <div className="flex w-4/5">
-                <div className="p-2 rounded-md bg-gray-200">{comment.body}</div>
-                <div className="pl-1 text-xs text-gray-500 min-w-12">
-                  {date}
+            <li key={comment.id} className="mb-2">
+              <div className="flex">
+                <div className="pr-2 font-bold ">
+                  {capitalize(name as string)}
                 </div>
+                <div className="pl-2 text-gray-400">{date}</div>
+              </div>
+              <div className="p-2 rounded-md bg-gray-200 w-fit">
+                {comment.body}
               </div>
             </li>
           );
@@ -48,4 +54,4 @@ const Body: React.FC<BodyProps> = async ({ listingId }) => {
   );
 };
 
-export default Body;
+export default Comments;

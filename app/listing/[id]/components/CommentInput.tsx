@@ -26,7 +26,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       {...register(id, { required })}
       type={type}
       placeholder={placeholder}
-      className="w-full p-2 border border-gray-300 rounded-md"
+      className="w-full p-2 rounded-md form-input border-none focus:ring-transparent"
     />
   );
 };

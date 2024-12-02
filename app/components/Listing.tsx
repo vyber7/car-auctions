@@ -33,7 +33,7 @@ const Listing: React.FC<ListingProps> = ({
   watchersIds,
   currentUser,
 }) => {
-  const router = useRouter();
+  //const router = useRouter();
 
   const toggleWatchList = () => {
     axios
