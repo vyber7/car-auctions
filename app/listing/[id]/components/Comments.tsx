@@ -41,7 +41,9 @@ const Comments: React.FC<CommentsProps> = async ({ listingId }) => {
                 <div className="pr-2 font-bold ">
                   {capitalize(name as string)}
                 </div>
-                <div className="pl-2 text-gray-400">{date}</div>
+                <div className="pl-2 text-gray-400 text-xs transform translate-y-1">
+                  {date}
+                </div>
               </div>
               <div className="p-2 rounded-md bg-gray-200 w-fit">
                 {comment.body}
