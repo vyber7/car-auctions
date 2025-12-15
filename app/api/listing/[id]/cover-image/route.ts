@@ -1,16 +1,17 @@
+import { NextResponse } from "next/server";
 import prisma from "../../../../libs/prismadb";
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  context: { params: Promise<{ id: string }> }
 ) {
-  const { id: listingId } = await params;
+  const { id: listingId } = await context.params;
   const body = await request.json();
   const { url: coverImageUrl } = body;
 
   if (!coverImageUrl) {
-    return new Response(
-      JSON.stringify({ message: "No cover image URL provided" }),
+    return NextResponse.json(
+      { message: "No cover image URL provided" },
       { status: 400 }
     );
   }
@@ -22,18 +23,19 @@ export async function POST(
       data: { coverImage: coverImageUrl },
     });
 
-    return new Response(
-      JSON.stringify({
+    return NextResponse.json(
+      {
         message: "Cover image updated successfully",
         coverImageUrl,
-      }),
+      },
       { status: 200 }
     );
   } catch (error) {
     console.error("Error updating cover image:", error);
-    return new Response(
-      JSON.stringify({ message: "Failed to update cover image" }),
+    return NextResponse.json(
+      { message: "Failed to update cover image" },
       { status: 500 }
     );
   }
 }
+
