@@ -1,20 +1,19 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import AccountHeader from "@/app/components/AccountHeader";
-import AccountLinks from "@/app/components/AccountLinks";
-import Spacer from "@/app/components/Spacer";
+import AccountHeader from "@/app/account/components/AccountHeader";
+import AccountLinks from "@/app/account/components/AccountLinks";
+import Empty from "@/app/components/Empty";
 
 const BidsAndWins = async () => {
   const currentUser = await getCurrentUser();
   return (
     <>
-      <div className="m-auto max-w-5xl grid grid-cols-4 gap-4 pb-4">
+      <div className="m-auto max-w-5xl grid grid-cols-4 gap-4 pb-4 px-2 lg:px-0">
         <AccountHeader userName={currentUser?.name?.split(" ")[0]} />
         <AccountLinks />
-        <div className="col-span-3 flex justify-center">
-          You haven&apos;t placed any bids yet.
+        <div className="lg:col-span-3 col-span-4">
+          <Empty />
         </div>
       </div>
-      <Spacer />
     </>
   );
 };

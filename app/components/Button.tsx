@@ -28,9 +28,10 @@ const Button: React.FC<ButtonProps> = ({
       type={type}
       disabled={disabled}
       className={clsx(
-        `
-        flex
+        `flex
         justify-center
+        items-center
+        gap-1
         rounded-md
         px-3
         py-2

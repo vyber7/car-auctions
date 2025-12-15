@@ -7,18 +7,19 @@ export async function POST(req: Request) {
   try {
     const body = await req.json();
 
-    console.log("Server Data: ", body);
+    // console.log("Server user/images: ");
 
-    const { year, make, model, miles, price, location, description } = body;
+    const { year, make, model, miles, reservePrice, location, description } =
+      body.data;
 
-    console.log("User: ", currentUser);
+    console.log("Body data: ", body.data);
 
     if (
       !year ||
       !make ||
       !model ||
       !miles ||
-      !price ||
+      !reservePrice ||
       !location ||
       !description
     ) {
@@ -30,25 +31,43 @@ export async function POST(req: Request) {
       make,
       model,
       miles: +miles,
-      price: +price,
+      reservePrice: +reservePrice,
       location,
       description,
     };
     console.log("Listing to Create: ", listing);
-    await prisma.listing.create({
+    const newListing = await prisma.listing.create({
       data: {
-        userId: currentUser?.id,
+        user: {
+          connect: {
+            id: currentUser?.id,
+          },
+        },
         year: listing.year,
         make: listing.make,
         model: listing.model,
-        price: listing.price,
+        reservePrice: listing.reservePrice,
         miles: listing.miles,
         location: listing.location,
         description: listing.description,
+        images: [], // Images will be added later
+      },
+    });
+
+    await prisma.user.update({
+      where: {
+        id: currentUser?.id,
+      },
+      data: {
+        uploadList: {
+          connect: {
+            id: newListing.id,
+          },
+        },
       },
     });
     console.log("Listing created successfully");
-    return NextResponse.json(listing, { status: 201 });
+    return NextResponse.json(newListing, { status: 201 });
   } catch (error: any) {
     console.log(error, "LISTING_ERROR");
     return new NextResponse("Internal Error", { status: 500 });

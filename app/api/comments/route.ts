@@ -1,6 +1,12 @@
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { NextResponse } from "next/server";
+import { NextResponse, userAgent } from "next/server";
 import prisma from "@/app/libs/prismadb";
+import { pusherServer } from "@/app/libs/pusher";
+
+// POST /api/comments
+// Required fields in the body: comment, listingId
+// Optional fields in the body: image
+// Returns the updated listing with the new comment
 
 export async function POST(req: Request) {
   try {
@@ -32,14 +38,14 @@ export async function POST(req: Request) {
             id: listingId,
           },
         },
-        seen: {
-          connect: {
-            id: currentUser.id,
-          },
-        },
+        // seen: {
+        //   connect: {
+        //     id: currentUser.id,
+        //   },
+        // },
       },
       include: {
-        seen: true,
+        // seen: true,
         user: true,
       },
     });
@@ -60,11 +66,27 @@ export async function POST(req: Request) {
         commenters: true,
         comments: {
           include: {
-            seen: true,
+            // seen: true,
           },
         },
       },
     });
+
+    await pusherServer.trigger(
+      `listing-${listingId}`,
+      "new-comment",
+      newComment
+    );
+
+    const lastComment =
+      updatedListing.comments[updatedListing.comments.length - 1];
+
+    // updatedListing.commenters.map((commenter) => {
+    //   pusherServer.trigger(commenter.email!, "listing-updated", {
+    //     id: listingId,
+    //     comments: lastComment,
+    //   });
+    // });
 
     return NextResponse.json(updatedListing, { status: 201 });
   } catch (error: any) {

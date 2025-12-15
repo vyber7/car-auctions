@@ -1,57 +1,82 @@
+"use client";
 //import getCurrentUser from "@/app/actions/getCurrentUser";
 //import Avatar from "@/app/components/Avatar";
-import prisma from "@/app/libs/prismadb";
-import Form from "./Form";
+import { User } from "next-auth";
+import Form from "./CommentForm";
+import { Comment, Bid } from "@prisma/client";
+import { useEffect, useRef, useState } from "react";
+import { pusherClient } from "@/app/libs/pusher";
+import { find } from "lodash";
+import CommentBox from "./CommentBox";
 
 interface CommentsProps {
+  initialComments: (Comment & { user: User | null })[];
+  initialBids: (Bid & { user: { name: string | null } })[];
   listingId: string;
 }
 
-const Comments: React.FC<CommentsProps> = async ({ listingId }) => {
-  //const currentUser = await getCurrentUser();
+const Comments: React.FC<CommentsProps> = ({
+  initialComments,
+  initialBids,
+  listingId,
+}) => {
+  const [comments, setComments] = useState(initialComments);
+  const [bids, setBids] = useState(initialBids);
+  const topRef = useRef<HTMLDivElement>(null);
 
-  const comments = await prisma.comment.findMany({
-    where: {
-      listingId: listingId,
-    },
-    orderBy: {
-      createdAt: "desc",
-    },
-    include: {
-      user: true,
-    },
-  });
+  useEffect(() => {
+    pusherClient.subscribe(`listing-${listingId}`);
+    // topRef.current?.scrollIntoView({ behavior: "smooth" });
+
+    const commentHandler = (comment: Comment & { user: User | null }) => {
+      setComments((current) => {
+        if (find(current, { id: comment.id })) {
+          return current;
+        }
+
+        return [comment, ...current];
+      });
+      // topRef.current?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    pusherClient.bind("new-comment", commentHandler);
+
+    return () => {
+      pusherClient.unsubscribe(`listing-${listingId}`);
+      pusherClient.unbind("new-comment", commentHandler);
+    };
+  }, [listingId]);
+
+  useEffect(() => {
+    pusherClient.subscribe(`listing-${listingId}`);
+
+    const bidHandler = (bid: Bid & { user: { name: string | null } }) => {
+      setBids((current) => {
+        if (find(current, { id: bid.id })) {
+          return current;
+        }
+
+        return [bid, ...current];
+      });
+    };
+
+    pusherClient.bind("new-bid", bidHandler);
+
+    return () => {
+      pusherClient.unsubscribe(`listing-${listingId}`);
+      pusherClient.unbind("new-bid", bidHandler);
+    };
+  }, [listingId]);
 
   return (
-    <div className="mb-2 p-4 border shadow-md rounded-md shadow-gray-400">
+    <div
+      id="comments"
+      className="p-4 border shadow-md rounded-md shadow-gray-400 bg-white"
+    >
       <h1 className="pb-4">Comments & Bids</h1>
       <Form listingId={listingId} />
-      <ul className="flex flex-col gap-2">
-        {comments.map((comment) => {
-          let date = comment.createdAt.toDateString();
-          date = date.slice(4, 10);
-          let name = comment.user?.name?.split(" ")[0];
-          const capitalize = (str: string) => {
-            return str.charAt(0).toUpperCase() + str.slice(1);
-          };
-
-          return (
-            <li key={comment.id} className="mb-2">
-              <div className="flex">
-                <div className="pr-2 font-bold ">
-                  {capitalize(name as string)}
-                </div>
-                <div className="pl-2 text-gray-400 text-xs transform translate-y-1">
-                  {date}
-                </div>
-              </div>
-              <div className="p-2 rounded-md bg-gray-200 w-fit">
-                {comment.body}
-              </div>
-            </li>
-          );
-        })}
-      </ul>
+      <div ref={topRef}></div>
+      <CommentBox comments={comments} bids={bids} />
     </div>
   );
 };

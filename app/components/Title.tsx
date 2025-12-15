@@ -12,8 +12,13 @@ const Title: React.FC<TitleProps> = ({ year, make, model, large }) => {
 
   const title = `${year} ${capitalized(make)} ${capitalized(model)}`;
 
-  if (large) return <h1 className="py-5 text-xl font-bold">{title}</h1>;
-  else return <h1 className="p-2 font-bold">{title}</h1>;
+  if (large)
+    return (
+      <h1 className="p-4 text-xl font-bold rounded-t-md shadow-md shadow-gray-400 bg-white">
+        {title}
+      </h1>
+    );
+  else return <h1 className="p-2 font-bold text-md">{title}</h1>;
 };
 
 export default Title;

@@ -1,6 +1,7 @@
 import prisma from "../../libs/prismadb";
 import getCurrentUser from "../../../app/actions/getCurrentUser";
 import { NextResponse } from "next/server";
+import { pusherServer } from "@/app/libs/pusher";
 
 export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
@@ -34,6 +35,17 @@ export async function POST(request: Request) {
       });
 
       console.log(`Added ${listingId} (${listing?.make}) to watchlist`);
+
+      await pusherServer.trigger(`listing-${listingId}`, "watchlist-update", {
+        listingId: listingId,
+        userId: currentUser.id,
+      });
+
+      await pusherServer.trigger(
+        `user-${currentUser.id}-watching`,
+        "watching-update",
+        listing
+      );
     };
 
     const removeFromWatchList = async () => {
@@ -51,6 +63,17 @@ export async function POST(request: Request) {
       });
 
       console.log(`Removed ${listingId} (${listing?.make}) from watchlist`);
+
+      await pusherServer.trigger(`listing-${listingId}`, "watchlist-update", {
+        listingId: listingId,
+        userId: currentUser.id,
+      });
+
+      await pusherServer.trigger(
+        `user-${currentUser.id}-watching`,
+        "watching-update",
+        listing
+      );
     };
 
     if (currentUser?.watchListIds.includes(listingId)) {

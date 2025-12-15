@@ -1,4 +1,4 @@
-import AccountLinks from "@/app/components/AccountLinks";
+import AccountLinks from "@/app/account/components/AccountLinks";
 
 const accountLayout = ({ children }: { children: React.ReactNode }) => {
   return (

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+
 import { FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
 
 interface CommentInputProps {
@@ -26,7 +26,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       {...register(id, { required })}
       type={type}
       placeholder={placeholder}
-      className="w-full p-2 rounded-md form-input border-none focus:ring-transparent"
+      className="w-full p-2 rounded-md form-input border-none focus:ring-transparent placeholder:text-gray-400"
     />
   );
 };

@@ -5,7 +5,10 @@
 html,
 body,
 :root {
-  height: 100%;
-  background-color: white;
+  background-color: rgb(161, 161, 161);
   color: #101720;
+  scroll-behavior: smooth;
+}
+body {
+  min-height: 100vh;
 }

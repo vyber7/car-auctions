@@ -23,9 +23,10 @@ const Input: React.FC<InputProps> = ({
   disabled = false,
 }) => {
   return (
-    <div>
+    <div className="">
       <label
-        className="*
+        htmlFor={id}
+        className="
         block
         text-sm
         font-medium
@@ -35,10 +36,7 @@ const Input: React.FC<InputProps> = ({
       >
         {label}
       </label>
-      <div
-        className="mt-2
-        "
-      >
+      <div className="mt-2">
         <input
           id={id}
           type={type}
@@ -64,7 +62,8 @@ const Input: React.FC<InputProps> = ({
           placeholder:text-gray-400
           hover:ring hover:ring-gray-500
           sm:text-sm
-          sm:leading-6`,
+          sm:leading-6
+          `,
             errors[id] && "focus:ring-rose-500",
             disabled && "opacity-50 cursor-not-allowed"
           )}

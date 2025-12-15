@@ -1,3 +1,4 @@
 {
-  "cSpell.words": ["clsx", "datasource", "signin"]
+  "cSpell.words": ["clsx", "datasource", "signin"],
+  "prisma.pinToPrisma6": true
 }
