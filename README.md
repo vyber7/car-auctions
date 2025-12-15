@@ -1,36 +1,236 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Car Auctions Platform
 
-## Getting Started
+A modern, real-time car auction platform built with Next.js 15, TypeScript, Prisma, and Pusher for live updates. Users can browse, bid, and sell vehicles in real-time auctions with live countdown timers and instant notifications.
 
-First, run the development server:
+## 🌟 Features
+
+- **Real-Time Auctions**: Live countdown timers and instant bid updates using Pusher
+- **User Authentication**: NextAuth.js integration with email/password and OAuth support
+- **Auction Management**: Create and manage vehicle listings, set starting bids and reserve prices
+- **Bidding System**: Place bids with real-time updates to all viewers
+- **Watchlist**: Save and track favorite listings
+- **Comments & Discussion**: Community engagement on each listing
+- **Image Management**: Cloudinary integration for vehicle uploads and optimization
+- **Responsive Design**: Fully responsive UI with Tailwind CSS
+- **User Accounts**: Personalized dashboard with bid history and uploaded listings
+
+## 🛠 Tech Stack
+
+### Frontend
+
+- **Next.js 15** - React framework with App Router
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **React Icons** - Icon library
+- **React Hook Form** - Form management
+
+### Backend & Services
+
+- **Next.js API Routes** - Serverless endpoints
+- **Prisma ORM** - Database management
+- **MongoDB** - NoSQL database
+- **NextAuth.js** - Authentication
+- **Pusher** - Real-time broadcasting
+- **Cloudinary** - Image hosting
+
+## 📋 Prerequisites
+
+- Node.js 18+
+- MongoDB database (local or cloud)
+- Cloudinary account
+- Pusher account
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
+
+```bash
+git clone <repository-url>
+cd app-car-auctions
+npm install
+```
+
+### 2. Setup Environment Variables
+
+Create `.env.local`:
+
+```env
+# Database
+DATABASE_URL=mongodb+srv://user:password@cluster.mongodb.net/car-auctions
+
+# NextAuth
+NEXTAUTH_SECRET=your-secret-key-here
+NEXTAUTH_URL=http://localhost:3000
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
+# Pusher
+NEXT_PUBLIC_PUSHER_APP_KEY=your-app-key
+PUSHER_APP_ID=your-app-id
+PUSHER_SECRET=your-secret
+
+# OAuth (Optional)
+GITHUB_ID=your-github-id
+GITHUB_SECRET=your-github-secret
+```
+
+### 3. Initialize Database
+
+```bash
+npx prisma migrate dev
+```
+
+### 4. Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 📁 Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+```TypeScript
+app-car-auctions/
+├── app/
+│   ├── api/                 # API routes
+│   ├── components/          # Reusable React components
+│   ├── hooks/               # Custom React hooks
+│   ├── libs/                # Utilities (Prisma, Pusher, Cloudinary)
+│   ├── actions/             # Server actions
+│   ├── (site)/              # Public pages
+│   ├── listing/             # Listing detail pages
+│   ├── account/             # User dashboard
+│   ├── signin/              # Auth pages
+│   └── ...
+├── prisma/
+│   └── schema.prisma        # Database schema
+├── public/                  # Static assets
+└── package.json
+```
 
-## Learn More
+## 🏃 Available Commands
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev         # Start development server
+npm run build       # Build for production
+npm start           # Start production server
+npm run lint        # Run linter
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Prisma commands
+npx prisma studio  # Open Prisma Studio (UI for database)
+npx prisma migrate dev --name <name>  # Create migration
+npx prisma migrate reset               # Reset database
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## 🔌 Key API Endpoints
 
-## Deploy on Vercel
+| Endpoint                  | Method   | Description           |
+| ------------------------- | -------- | --------------------- |
+| `/api/auth/[...nextauth]` | POST     | Authentication        |
+| `/api/place-bid`          | POST     | Submit a bid          |
+| `/api/auction-start`      | POST     | Start an auction      |
+| `/api/auction-end`        | POST     | End an auction        |
+| `/api/comments`           | POST/GET | Manage comments       |
+| `/api/update-watchlist`   | POST     | Update watchlist      |
+| `/api/upload-image`       | POST     | Upload vehicle images |
+| `/api/cloudinary-images`  | GET      | Retrieve images       |
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 🔄 Real-Time Features
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The app uses **Pusher** for real-time updates:
+
+- **Live Bid Updates**: All viewers see new bids instantly
+- **Countdown Timers**: Real-time auction countdown displays
+- **Timer Extension**: Automatically extends auction by 2 minutes when bid placed within 2 minutes of end
+- **Comments**: Live comment feed with instant notifications
+
+## 🎯 Core Custom Hooks
+
+### `useCountDown(targetDate, listingId)`
+
+Provides real-time countdown display with Pusher integration for auction timer updates.
+
+```tsx
+const timeLeft = useCountDown(listing.auctionEndsAt, listing.id);
+```
+
+### `useListing()`
+
+Gets the current listing ID from URL parameters.
+
+```tsx
+const listingId = useListing();
+```
+
+## 🗄 Database Models
+
+- **User** - User profiles, authentication, watchlists, bids
+- **Listing** - Vehicle details, auction info, images, status
+- **Bid** - Bid records with amounts and timestamps
+- **Comment** - Community comments on listings
+- **Account** - OAuth account linking
+
+See `prisma/schema.prisma` for the complete schema.
+
+## 🔐 Authentication
+
+- **NextAuth.js**: Email/password and OAuth authentication
+- **Password Security**: Bcrypt hashing for secure storage
+- **Session Management**: Secure, HTTP-only session cookies
+- **OAuth Providers**: Support for GitHub, Google, and more
+
+## 📸 Image Management
+
+- **Cloudinary Integration**: Cloud-based image storage
+- **Automatic Optimization**: Images automatically optimized for web
+- **Responsive Delivery**: Images served at optimal sizes for each device
+- **Next.js Image Component**: Built-in performance optimization
+
+## 🐛 Common Issues
+
+### Hydration Mismatch
+
+Ensure server and client rendering are identical. Use `useEffect` for client-only logic.
+
+### Pusher Channel Issues
+
+Each component subscribes to its specific listing channel to avoid cross-updates.
+
+### MongoDB Connection
+
+Verify `DATABASE_URL` is correctly set in `.env.local`.
+
+## 📝 Development Guidelines
+
+- Use TypeScript for type safety
+- Create reusable components in `/app/components`
+- Use custom hooks for shared logic
+- Keep API routes focused and modular
+- Use Prisma for all database operations
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push code to GitHub
+2. Connect repository to Vercel
+3. Set environment variables in Vercel dashboard
+4. Deploy automatically on push
+
+### Other Platforms
+
+- Ensure Node.js 18+ is available
+- Set all environment variables
+- Run `npm run build` before starting
+
+## 📄 License
+
+This project is private and proprietary.
+
+## 📞 Support
+
+For issues or questions, please refer to the documentation or create an issue in the repository.
