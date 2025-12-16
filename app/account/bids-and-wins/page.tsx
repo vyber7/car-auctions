@@ -3,6 +3,8 @@ import AccountHeader from "@/app/account/components/AccountHeader";
 import AccountLinks from "@/app/account/components/AccountLinks";
 import Empty from "@/app/components/Empty";
 
+export const dynamic = "force-dynamic";
+
 const BidsAndWins = async () => {
   const currentUser = await getCurrentUser();
   return (

@@ -6,6 +6,8 @@ import AccountHeader from "@/app/account/components/AccountHeader";
 import Avatar from "@/app/components/Avatar";
 import Button from "@/app/components/Button";
 
+export const dynamic = "force-dynamic";
+
 const Profile = async () => {
   const currentUser = await getCurrentUser();
 

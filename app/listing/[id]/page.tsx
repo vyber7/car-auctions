@@ -30,13 +30,13 @@ export const metadata: Metadata = {
 
 //gets page's id from url
 interface Params {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
-const Listing = async ({ params }: Params) => {
-  const { id } = await params;
+const Listing = async (props: Params) => {
+  const { id } = await props.params;
 
   const comments = await getComments(id as string);
   const currentUser = await getCurrentUser();

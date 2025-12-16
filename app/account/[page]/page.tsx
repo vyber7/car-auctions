@@ -2,10 +2,17 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import Link from "next/link";
 import Image from "next/image";
 import Spacer from "@/app/components/Spacer";
-import type { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
-const Profile = async ({ params }: Params) => {
-  const { page } = params;
+export const dynamic = "force-dynamic";
+
+interface Params {
+  params: Promise<{
+    page: string;
+  }>;
+}
+
+const Profile = async (props: Params) => {
+  const { page } = await props.params;
   console.log("PAGE: ", page);
   const currentUser = await getCurrentUser();
 
