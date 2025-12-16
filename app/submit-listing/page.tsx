@@ -2,11 +2,11 @@ import Head from "next/head";
 import SubmitForm from "./components/SubmitForm";
 import Aside from "./components/Aside";
 import getSoldAuctions from "../actions/getSoldAuctions";
-import getCurrentUser from "../actions/getCurrentUser";
+//import getCurrentUser from "../actions/getCurrentUser";
 
 async function SubmitVehicle() {
   const soldAuctions = await getSoldAuctions();
-  const currentUser = await getCurrentUser();
+  //const currentUser = await getCurrentUser();
   return (
     <div className="m-auto px-2 lg:px-0 pt-16 min-h-lvh pb-4 lg:gap-4 flex flex-col lg:flex-row max-w-5xl">
       <Head>

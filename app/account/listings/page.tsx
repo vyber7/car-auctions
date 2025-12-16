@@ -5,7 +5,7 @@ import AccountHeader from "@/app/account/components/AccountHeader";
 import UploadedListings from "@/app/account/components/UploadedListings";
 import WatchingListings from "@/app/account/components/WatchingListings";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 const MyListings = async () => {
   const currentUser = await getCurrentUser();

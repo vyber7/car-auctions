@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import Spacer from "@/app/components/Spacer";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 interface Params {
   params: Promise<{
