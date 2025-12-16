@@ -10,11 +10,11 @@ interface Params {
     page: string;
   }>;
 }
+const currentUser = await getCurrentUser();
 
 const Profile = async (props: Params) => {
   const { page } = await props.params;
   console.log("PAGE: ", page);
-  const currentUser = await getCurrentUser();
 
   return (
     <>

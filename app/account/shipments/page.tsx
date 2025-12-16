@@ -4,9 +4,9 @@ import AccountLinks from "@/app/account/components/AccountLinks";
 import Empty from "@/app/components/Empty";
 
 //export const dynamic = "force-dynamic";
+const currentUser = await getCurrentUser();
 
 const Shipments = async () => {
-  const currentUser = await getCurrentUser();
   return (
     <>
       <div className="m-auto max-w-5xl grid grid-cols-4 gap-4 pb-4 px-2 lg:px-0">
