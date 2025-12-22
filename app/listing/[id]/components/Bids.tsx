@@ -80,7 +80,7 @@ const Bids: React.FC<BidsProps> = ({
       className="p-4 border shadow-md rounded-md shadow-gray-400 bg-white"
     >
       <h2 className="text-lg font-bold">
-        {listing.year} {listing.make} {listing.model}
+        {listing.year} {capitalize(listing.make)} {capitalize(listing.model)}
       </h2>
       <div className="flex flex-col md:flex-row gap-2 md:justify-between pb-4">
         <div>
