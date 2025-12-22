@@ -11,7 +11,7 @@ interface AsideProps {
 
 const Aside: React.FC<AsideProps> = ({ auctions, variant }) => {
   return (
-    <aside className="pt-4 lg:p-0 rounded-md shadow-md shadow-gray-400 h-fit">
+    <aside className="pt-4 lg:p-0 h-fit">
       {variant === "sold" && <h2 className="pb-4 font-bold">Recently Sold</h2>}
       {variant === "live" && <h2 className="pb-4 font-bold">Live Auctions</h2>}
       <div className="flex flex-wrap lg:flex-col gap-2 lg:gap-4">

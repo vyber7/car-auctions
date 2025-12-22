@@ -177,7 +177,7 @@ const ListingBox: React.FC<ListingBoxProps> = ({ listing, currentUser }) => {
           )}
         </div>
       </div>
-      <div className="text-sm p-2 pt-0">
+      <div className="text-sm p-2">
         6-Speed Manual, V12 Power, California-Owned, Some Modifications
         <span className="block text-gray-500">{listing.location}</span>
       </div>

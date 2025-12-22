@@ -11,7 +11,7 @@ export default function SignIn() {
         py-12
         sm:px-6
         lg:px-8
-      bg-gray-100
+      bg-slate-300
       "
     >
       <div>

@@ -53,7 +53,7 @@ const CoverImage: React.FC<CoverImageProps> = ({ listingId, url, owner }) => {
           }}
           onSuccess={handleUpload}
           uploadPreset="auctions"
-          className="p-2 mt-4 text-blue-500 bg-white rounded-md w-fit"
+          className="p-2 mt-2 lg:mt-4 text-blue-500 bg-white rounded-md w-fit"
         >
           {imageUrl ? "Edit Cover Image" : "Add Cover Image"}
         </CldUploadButton>

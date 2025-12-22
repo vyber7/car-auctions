@@ -55,7 +55,7 @@ const SideListingBox: React.FC<SideListingBoxProps> = ({
                   {timeLeft}
                 </span>
               </div>
-              <div className="bg-black bg-opacity-60 p-1 pt-0 text-xs text-white w-full">
+              <div className="bg-black bg-opacity-60 p-1 pt-0 text-xs  text-white w-full">
                 {bid ? (
                   <>
                     Bid <b>${formatAmount(bid as number)}</b>
