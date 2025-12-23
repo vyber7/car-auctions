@@ -140,7 +140,7 @@ function Header(): JSX.Element {
 
   const navLinks = [
     { name: "Submit a Vehicle", href: "/submit-listing" },
-    // { name: "Auctions", href: "/" },
+    { name: "Home", href: "/" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -276,10 +276,11 @@ function Header(): JSX.Element {
                   key={link.name}
                   className={clsx(
                     link.name === "Submit a Vehicle" &&
-                      "bg-gray-900 text-white",
+                      "bg-slate-800 text-white",
                     `block rounded p-2 text-left text-sm transition ${
                       link.name !== "Submit a Vehicle" && "hover:bg-gray-100"
-                    } lg:inline-block lg:w-32 lg:p-1 lg:text-center`
+                    } lg:inline-block lg:w-32 lg:p-1 lg:text-center`,
+                    link.name === "Home" && "lg:hidden"
                   )}
                 >
                   {link.name}
