@@ -67,7 +67,7 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
           )}
         </Link>
 
-        <div className="flex justify-between p-2 bg-gray-900 text-white text-xs rounded-bl-md">
+        <div className="flex justify-between p-2 bg-slate-800 text-white text-xs rounded-bl-md">
           {listing.status === "UPCOMING" ? (
             <div>Upcoming</div>
           ) : listing.status === "ENDED" ? (

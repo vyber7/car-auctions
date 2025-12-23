@@ -7,15 +7,15 @@ import Link from "next/link";
 export default async function Home() {
   const listings = await prisma.listing.findMany();
   const count = await prisma.listing.count();
-  const countFuture = await prisma.listing.count({
-    where: { status: "UPCOMING" },
-  });
-  const countPast = await prisma.listing.count({
-    where: { status: "ENDED" },
-  });
-  const countLive = await prisma.listing.count({
-    where: { status: "LIVE" },
-  });
+  // const countFuture = await prisma.listing.count({
+  //   where: { status: "UPCOMING" },
+  // });
+  // const countPast = await prisma.listing.count({
+  //   where: { status: "ENDED" },
+  // });
+  // const countLive = await prisma.listing.count({
+  //   where: { status: "LIVE" },
+  // });
 
   const currentUser = await getCurrentUser();
 
@@ -28,10 +28,10 @@ export default async function Home() {
       </Head> */}
       <div className="flex justify-between">
         <h2 className="text-md font-bold w-max inline-block">
-          All Auctions
+          Total Auctions
           <span className="text-sm font-normal"> ({count})</span>{" "}
         </h2>
-        <h2 className="text-md font-bold w-max md:inline-block hidden">
+        {/* <h2 className="text-md font-bold w-max md:inline-block hidden">
           <Link href="/live/listings">Live Auctions</Link>
           <span className="text-sm font-normal"> ({countLive})</span>{" "}
         </h2>
@@ -42,7 +42,7 @@ export default async function Home() {
         <h2 className="text-md font-bold w-max md:inline-block hidden">
           <Link href="/past/listings">Past Auctions</Link>
           <span className="text-sm font-normal"> ({countPast})</span>{" "}
-        </h2>
+        </h2> */}
       </div>
 
       {listings ? (

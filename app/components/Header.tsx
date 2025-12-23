@@ -139,8 +139,8 @@ function Header(): JSX.Element {
   }, [label]);
 
   const navLinks = [
-    { name: "Submit a Vehicle", href: "/submit-listing" },
     { name: "Home", href: "/" },
+    { name: "Submit a Vehicle", href: "/submit-listing" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ];
@@ -208,13 +208,13 @@ function Header(): JSX.Element {
                       <Link
                         href={link.href as Url}
                         key={link.name}
-                        className="block w-full rounded p-2 text-left text-sm transition hover:bg-gray-100 lg:w-full lg:text-center"
+                        className="block w-full rounded p-2 text-left text-sm transition hover:bg-slate-100 lg:w-full lg:text-center"
                       >
                         {link.name}
                       </Link>
                     ))}
                     <button
-                      className="hidden rounded w-full p-2 text-left text-sm transition hover:bg-gray-100 lg:block lg:w-full lg:p-1 lg:text-center"
+                      className="hidden rounded w-full p-2 text-left text-sm transition bg-slate-200 hover:bg-slate-400 lg:block lg:w-full lg:p-1 lg:text-center"
                       onClick={() => void signOut()}
                     >
                       Sign Out
@@ -224,14 +224,14 @@ function Header(): JSX.Element {
               )}
               {user && <hr className="mb-2 mt-2 lg:hidden" />}
               <Link href="/">
-                <RiHome2Fill className="hidden text-2xl transition hover:bg-gray-100 lg:inline-block lg:text-center" />
+                <RiHome2Fill className="hidden text-2xl text-slate-800 transition lg:inline-block lg:text-center" />
               </Link>
               {/* FIXME: Chevron not toggling correctly on first click */}
-              <div className="flex items-center p-2 lg:px-4 lg:py-1 transition lg:rounded hover:cursor-pointer hover:bg-gray-100">
+              <div className="flex items-center p-2 lg:px-4 lg:py-1 transition lg:rounded hover:cursor-pointer hover:bg-slate-100">
                 <label
                   ref={auctionsLabel}
                   htmlFor="auction-checkbox"
-                  className="block cursor-pointer text-sm   hover:bg-gray-100 "
+                  className="block cursor-pointer text-sm hover:bg-slate-100 "
                   onClick={() => setChevron(!chevron)}
                 >
                   Auctions
@@ -247,24 +247,24 @@ function Header(): JSX.Element {
                 id="auction-checkbox"
                 className="peer hidden"
               />
-              <div className="lg:shadow lg:absolute bg-gray-100 lg:bg-white lg:top-9 lg:p-2 hidden left-6 rounded peer-checked:block lg:left-6">
+              <div className="lg:shadow lg:absolute bg-slate-100 lg:bg-white lg:top-9 lg:p-2 hidden left-6 rounded peer-checked:block lg:left-6">
                 <Link
                   href="/live/listings"
-                  className="w-full block rounded p-2 text-sm transition hover:bg-gray-200 lg:hover:bg-gray-100"
+                  className="w-full block rounded p-2 text-sm transition hover:bg-slate-200 lg:hover:bg-slate-200"
                 >
                   Live
                 </Link>
 
                 <Link
                   href="/future/listings"
-                  className="w-full block rounded p-2 text-sm transition hover:bg-gray-200 lg:hover:bg-gray-100"
+                  className="w-full block rounded p-2 text-sm transition hover:bg-slate-200 lg:hover:bg-slate-200"
                 >
                   Upcoming
                 </Link>
 
                 <Link
                   href="/past/listings"
-                  className="w-full block rounded p-2 text-sm transition hover:bg-gray-200 lg:hover:bg-gray-100"
+                  className="w-full block rounded p-2 text-sm transition hover:bg-slate-200 lg:hover:bg-slate-200"
                 >
                   Past
                 </Link>
@@ -278,7 +278,7 @@ function Header(): JSX.Element {
                     link.name === "Submit a Vehicle" &&
                       "bg-slate-800 text-white",
                     `block rounded p-2 text-left text-sm transition ${
-                      link.name !== "Submit a Vehicle" && "hover:bg-gray-100"
+                      link.name !== "Submit a Vehicle" && "hover:bg-slate-100"
                     } lg:inline-block lg:w-32 lg:p-1 lg:text-center`,
                     link.name === "Home" && "lg:hidden"
                   )}
@@ -286,17 +286,17 @@ function Header(): JSX.Element {
                   {link.name}
                 </Link>
               ))}
-
+              <hr className="mb-2 mt-2 lg:hidden" />
               {!user ? (
                 <button
-                  className="block w-full rounded p-2 text-left text-sm transition hover:bg-gray-100 lg:inline-block lg:w-32 lg:p-1 lg:text-center"
+                  className="block w-full rounded p-2 text-left text-sm transition bg-slate-200 hover:bg-slate-400 lg:inline-block lg:w-32 lg:p-1 lg:text-center"
                   onClick={() => void signIn()}
                 >
                   Sign in
                 </button>
               ) : (
                 <button
-                  className="block w-full rounded p-2 text-left text-sm transition hover:bg-gray-100 lg:hidden"
+                  className="block w-full rounded p-2 text-left text-sm transition bg-slate-200 hover:bg-slate-400 lg:hidden"
                   onClick={() => void signOut()}
                 >
                   Sign Out

@@ -15,7 +15,7 @@ const UploadedListings: React.FC<UploadedListingsProps> = ({
 }) => {
   return (
     <>
-      <h2 className="text-xl font-bold bg-gray-900 text-white p-2 rounded-t-md">
+      <h2 className="text-xl font-bold bg-slate-800 text-white p-2 rounded-t-md">
         Uploaded
       </h2>
       <ul className="flex flex-col gap-4 py-4">

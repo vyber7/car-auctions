@@ -35,7 +35,7 @@ const WatchingListings: React.FC<WatchingListingsProps> = ({
   }, [currentUser?.id]);
   return (
     <>
-      <h2 className="text-xl font-bold bg-gray-900 rounded-t-md text-white p-2">
+      <h2 className="text-xl font-bold bg-slate-800 rounded-t-md text-white p-2">
         Watching
       </h2>
       <ul className="flex flex-col gap-4 pt-4">
