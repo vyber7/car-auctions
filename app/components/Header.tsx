@@ -11,6 +11,7 @@ import clsx from "clsx";
 
 import { FiChevronRight, FiChevronDown } from "react-icons/fi";
 import { AiOutlineClose } from "react-icons/ai";
+import { GiHamburgerMenu } from "react-icons/gi";
 
 function Header(): JSX.Element {
   const [chevron, setChevron] = useState(false);
@@ -24,6 +25,10 @@ function Header(): JSX.Element {
   const profileLabel = useRef<HTMLLabelElement>(null);
   // Set up ref for auctions dropdown
   const auctionsLabel = useRef<HTMLLabelElement>(null);
+
+  const closeNavbar = () => {
+    if (label.current) label.current.click();
+  };
 
   useEffect(() => {
     /**
@@ -142,7 +147,6 @@ function Header(): JSX.Element {
   }, [label]);
 
   const navLinks = [
-    { name: "Home", href: "/" },
     { name: "Submit a Vehicle", href: "/submit-listing" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
@@ -175,9 +179,9 @@ function Header(): JSX.Element {
           <label
             ref={label}
             htmlFor="checkbox"
-            className="py-0.5 lg:hidden cursor-pointer"
+            className="py-1.5 lg:hidden cursor-pointer"
           >
-            &#9776;
+            <GiHamburgerMenu />
           </label>
           <input type="checkbox" id="checkbox" className="peer hidden" />
 
@@ -188,14 +192,6 @@ function Header(): JSX.Element {
                           lg:h-auto lg:w-full lg:flex-row lg:justify-end lg:p-0 overflow-auto lg:overflow-visible"
           >
             <div className="lg:flex lg:gap-1 relative">
-              <div
-                className="absolute right-2 top-2 lg:hidden"
-                onClick={() => {
-                  if (label.current) label.current.click();
-                }}
-              >
-                <AiOutlineClose />
-              </div>
               {user && (
                 <div className="relative lg:order-2">
                   <label
@@ -207,6 +203,9 @@ function Header(): JSX.Element {
                     <span className="p-1 align-text-bottom text-sm font-bold ">
                       {user.email}
                     </span>
+                    <div className="lg:hidden py-1.5 grow font-bold flex justify-end">
+                      <AiOutlineClose onClick={() => void closeNavbar()} />
+                    </div>
                   </label>
                   <input
                     type="checkbox"
@@ -236,6 +235,12 @@ function Header(): JSX.Element {
               {user && <hr className="mb-2 mt-2 lg:hidden" />}
               <Link href="/">
                 <RiHome2Fill className="hidden text-2xl text-slate-800 transition lg:inline-block lg:text-center" />
+              </Link>
+              <Link
+                href="/"
+                className="block w-full rounded p-2 text-left text-sm transition lg:hidden hover:bg-slate-100 lg:w-full lg:text-center"
+              >
+                Home
               </Link>
               {/* FIXME: Chevron not toggling correctly on first click */}
               <div className="flex items-center p-2 lg:px-4 lg:py-1 transition lg:rounded hover:cursor-pointer hover:bg-slate-100">
@@ -280,7 +285,7 @@ function Header(): JSX.Element {
                   Past
                 </Link>
               </div>
-              <hr className="mb-2 mt-2 lg:hidden" />
+
               {navLinks.map((link) => (
                 <Link
                   href={link.href as Url}
