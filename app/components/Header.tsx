@@ -213,12 +213,12 @@ function Header(): JSX.Element {
                     className="peer hidden"
                   />
                   <hr className="mb-2 mt-2 lg:hidden" />
-                  <div className="lg:absolute lg:right-0 lg:shadow bg-white lg:top-9 lg:p-2 lg:hidden lg:rounded lg:w-full lg:peer-checked:block">
+                  <div className="lg:w-40 lg:absolute lg:right-0 lg:shadow bg-white lg:top-9 lg:p-2 lg:hidden lg:rounded lg:peer-checked:block">
                     {profileLinks.map((link) => (
                       <Link
                         href={link.href as Url}
                         key={link.name}
-                        className="block w-full rounded p-2 text-left text-sm transition hover:bg-slate-100 lg:w-full lg:text-center"
+                        className="block w-fit rounded p-2 text-left text-sm transition hover:bg-slate-100 lg:w-full lg:text-center"
                       >
                         {link.name}
                       </Link>
@@ -236,12 +236,19 @@ function Header(): JSX.Element {
               <Link href="/">
                 <RiHome2Fill className="hidden text-2xl text-slate-800 transition lg:inline-block lg:text-center" />
               </Link>
-              <Link
-                href="/"
-                className="block w-full rounded p-2 text-left text-sm transition lg:hidden hover:bg-slate-100 lg:w-full lg:text-center"
-              >
-                Home
-              </Link>
+              <div className="flex justify-between lg:hidden">
+                <Link
+                  href="/"
+                  className="w-full rounded p-2 text-left text-sm transition lg:hidden hover:bg-slate-100 lg:w-full lg:text-center"
+                >
+                  Home
+                </Link>
+                {!user && (
+                  <div className="lg:hidden flex items-center">
+                    <AiOutlineClose onClick={() => void closeNavbar()} />
+                  </div>
+                )}
+              </div>
               {/* FIXME: Chevron not toggling correctly on first click */}
               <div className="flex items-center p-2 lg:px-4 lg:py-1 transition lg:rounded hover:cursor-pointer hover:bg-slate-100">
                 <label
