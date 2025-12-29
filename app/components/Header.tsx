@@ -10,6 +10,7 @@ import { RiHome2Fill } from "react-icons/ri";
 import clsx from "clsx";
 
 import { FiChevronRight, FiChevronDown } from "react-icons/fi";
+import { AiOutlineClose } from "react-icons/ai";
 
 function Header(): JSX.Element {
   const [chevron, setChevron] = useState(false);
@@ -30,6 +31,7 @@ function Header(): JSX.Element {
      * If the click is outside of the component and the checkbox is checked, it will click the component.
      * @param event - The MouseEvent object.
      */
+
     function handleClickOutside(event: MouseEvent) {
       if (
         label.current &&
@@ -68,6 +70,7 @@ function Header(): JSX.Element {
     document.addEventListener("click", handleClickOutside);
 
     /*  
+
     
     // Hide header on scroll down and show on scroll up
     //let prevScrollPos = window.scrollY;
@@ -185,6 +188,14 @@ function Header(): JSX.Element {
                           lg:h-auto lg:w-full lg:flex-row lg:justify-end lg:p-0 overflow-auto lg:overflow-visible"
           >
             <div className="lg:flex lg:gap-1 relative">
+              <div
+                className="absolute right-2 top-2 lg:hidden"
+                onClick={() => {
+                  if (label.current) label.current.click();
+                }}
+              >
+                <AiOutlineClose />
+              </div>
               {user && (
                 <div className="relative lg:order-2">
                   <label
