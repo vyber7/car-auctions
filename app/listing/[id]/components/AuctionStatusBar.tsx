@@ -135,12 +135,12 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
   return (
     <>
       {listing.status === "LIVE" ? (
-        <div className="sticky top-11 z-[99] bg-gray-900 text-white rounded-md shadow-md shadow-gray-400">
+        <div className="sticky top-11 z-[99] text-xs md:text-sm lg:text-base bg-gray-900 text-white rounded-md shadow-md shadow-gray-400">
           <ProgressBar endTime={listing.auctionEndsAt} listingId={listing.id} />
           <div className="flex flex-row flex-wrap gap-2 justify-between items-center p-2 lg:p-4">
-            <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-red-600 rounded-md">
+            {/* <span className="inline-block px-4 py-2  font-semibold text-white bg-red-600 rounded-md">
               LIVE
-            </span>
+            </span> */}
 
             <span
               className={clsx(
@@ -166,7 +166,7 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
                 </span>
               </>
             )}
-            <div className="flex flex-row gap-2 justify-between items-center">
+            <div className="flex flex-row w-full md:w-auto gap-2 justify-end items-center">
               {/*user can end the auction if they are the owner and timeLeft is <= 3 hours*/}
               {currentUser == listing.userId ? (
                 <>
@@ -186,14 +186,14 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
               ) : (
                 <Link
                   href="#bids"
-                  className="px-4 py-2 text-sm font-semibold text-white bg-lime-500 hover:bg-lime-600 rounded-md"
+                  className="px-4 py-2 font-semibold text-white bg-lime-500 hover:bg-lime-600 rounded-md"
                 >
                   Place Bid
                 </Link>
               )}
               <Link
                 href="#comments"
-                className="px-4 py-2 text-sm font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md"
+                className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md"
               >
                 Comment
               </Link>
@@ -213,11 +213,11 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
           </div>
         </div>
       ) : listing.status === "ENDED" ? (
-        <div className="sticky top-11 z-[99] bg-gray-900 text-white p-2 lg:p-4 rounded-md shadow-md shadow-gray-400 ">
+        <div className="sticky top-11 z-[99] text-xs md:text-sm lg:text-base bg-gray-900 text-white p-2 lg:p-4 rounded-md shadow-md shadow-gray-400 ">
           <div className="flex flex-row flex-wrap gap-2 justify-between items-center">
-            <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gray-600 rounded-md">
+            {/* <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-gray-600 rounded-md">
               ENDED
-            </span>
+            </span> */}
             <div>
               {listing.currentBid &&
               listing.currentBid < (listing.reservePrice || 0) ? (
