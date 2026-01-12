@@ -10,6 +10,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { formatAmount, capitalize } from "@/app/utils/format";
 import { pusherClient } from "@/app/libs/pusher";
+import { RiAuctionFill } from "react-icons/ri";
 
 interface BidsProps {
   listing: Listing;
@@ -77,12 +78,12 @@ const Bids: React.FC<BidsProps> = ({
   return (
     <div
       id="bids"
-      className="p-4 border shadow-md rounded-md shadow-gray-400 bg-white"
+      className="p-2 md:p-4 border shadow-md rounded-md shadow-gray-400 bg-white"
     >
       <h2 className="text-lg font-bold">
         {listing.year} {capitalize(listing.make)} {capitalize(listing.model)}
       </h2>
-      <div className="flex flex-col md:flex-row gap-2 md:justify-between pb-4">
+      <div className="flex flex-col md:flex-row gap-2 md:justify-between pb-2 md:pb-4">
         <div>
           {listing.status === "ENDED" && listing.result === "SOLD" ? (
             <p>
@@ -158,7 +159,7 @@ const Bids: React.FC<BidsProps> = ({
         sellerEmail !== session?.user?.email ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="border flex border-gray-300 rounded-md has-[:focus]:ring has-[:focus]:ring-gray-500 hover:ring hover:ring-gray-500"
+          className="border flex border-gray-300 rounded-md has-[:focus]:ring has-[:focus]:ring-lime-500 hover:ring hover:ring-lime-500"
         >
           <input
             id="bidAmount"
@@ -166,7 +167,7 @@ const Bids: React.FC<BidsProps> = ({
             placeholder="Your Bid"
             {...register("bidAmount", { required: true })}
             className={clsx(
-              `w-4/5 form-input
+              `w-full form-input
               block rounded-l-md
               
               text-gray-900
@@ -185,20 +186,20 @@ const Bids: React.FC<BidsProps> = ({
           <button
             disabled={isLoading}
             type="submit"
-            className="w-1/5 flex
+            className="flex
         justify-center
         items-center
-        rounded-r-md
+        px-2
         border-none
         text-sm
         font-semibold
         focus-visible:outline
         focus-visible:outline-2
         focus-visible:outline-offset-2
-        bg-lime-500 hover:bg-lime-600 focus-visible:outline-lime-600
-        text-white"
+        text-lime-500 hover:text-lime-600 focus-visible:outline-lime-600
+        "
           >
-            Place a Bid
+            <RiAuctionFill className="text-2xl" />
           </button>
           <div>{errors.bidAmount && <span>This field is required</span>}</div>
         </form>

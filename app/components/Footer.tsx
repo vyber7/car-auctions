@@ -63,7 +63,7 @@ const Footer = () => {
         </div>
         <div className="text-sm pt-4">
           <span>
-            <FaCopyright className="inline" /> Copyright 2025. All rights
+            <FaCopyright className="inline" /> Copyright 2026. All rights
             reserved.
           </span>
           <span className="block">

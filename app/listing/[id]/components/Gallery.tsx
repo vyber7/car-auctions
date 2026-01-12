@@ -57,7 +57,7 @@ const Gallery: React.FC<GalleryProps> = ({ listingId, userId, owner }) => {
   };
 
   return (
-    <div className="rounded-md shadow-md shadow-gray-400 p-4 bg-white">
+    <div className="rounded-md shadow-md shadow-gray-400 p-2 md:p-4 bg-white">
       <div
         className={clsx(
           images.length ? "block" : "hidden",
