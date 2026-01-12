@@ -16,6 +16,7 @@ import ProgressBar from "./ProgressBar";
 import { FaHashtag, FaRegClock, FaRegCommentAlt } from "react-icons/fa";
 import Link from "next/link";
 import { GoStar, GoStarFill } from "react-icons/go";
+import { RiAuctionLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 
 interface AuctionStatusBarProps {
@@ -166,8 +167,8 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
                 </span>
               </>
             )}
-            <div className="flex flex-row w-full md:w-auto gap-2 justify-end items-center">
-              {/*user can end the auction if they are the owner and timeLeft is <= 3 hours*/}
+            <div className="flex flex-row gap-2 md:gap-4 justify-end items-center">
+              {/*user can end the auction if they are the owner*/}
               {currentUser == listing.userId ? (
                 <>
                   {/* {!canEndAuction(timeLeft) && (
@@ -184,29 +185,23 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
                   </Button>
                 </>
               ) : (
-                <Link
-                  href="#bids"
-                  className="px-4 py-2 font-semibold text-white bg-lime-500 hover:bg-lime-600 rounded-md"
-                >
-                  Place Bid
+                <Link href="#bids" className="">
+                  <RiAuctionLine className="cursor-pointer text-lg text-lime-500 hover:text-lime-600" />
                 </Link>
               )}
-              <Link
-                href="#comments"
-                className="px-4 py-2 font-semibold text-white bg-blue-500 hover:bg-blue-600 rounded-md"
-              >
-                Comment
+              <Link href="#comments" className="">
+                <FaRegCommentAlt className="cursor-pointer text-lg text-blue-500 hover:text-blue-600" />
               </Link>
               {currentUser !== listing.userId &&
                 (watching ? (
                   <GoStarFill
                     onClick={toggleWatchList}
-                    className="cursor-pointer text-2xl text-yellow-500 hover:text-yellow-600"
+                    className="cursor-pointer text-lg text-yellow-500 hover:text-yellow-600"
                   />
                 ) : (
                   <GoStar
                     onClick={toggleWatchList}
-                    className="cursor-pointer text-2xl text-yellow-500 hover:text-yellow-600"
+                    className="cursor-pointer text-lg text-yellow-500 hover:text-yellow-600"
                   />
                 ))}
             </div>
@@ -253,10 +248,8 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
           </div>
         </div>
       ) : (
-        <div className="sticky top-11 z-[99] bg-gray-900 p-2 lg:p-4 rounded-md shadow-md shadow-gray-400">
-          <span className="inline-block px-4 py-2 text-sm font-semibold text-white bg-yellow-600 rounded-md">
-            UPCOMING
-          </span>
+        <div className="sticky top-11 z-[99] text-xs md:text-sm lg:text-base bg-gray-900 p-2 lg:p-4 rounded-md shadow-md shadow-gray-400 text-center">
+          <span className="text-sm font-semibold text-white ">Upcoming</span>
         </div>
       )}
     </>
