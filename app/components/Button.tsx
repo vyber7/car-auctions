@@ -35,11 +35,12 @@ const Button: React.FC<ButtonProps> = ({
         rounded-md
         px-3
         py-2
-        text-sm
+        text-xs
         font-semibold
         focus-visible:outline
         focus-visible:outline-2
         focus-visible:outline-offset-2
+        md:text-sm
       `,
         disabled && "opacity-50 cursor-default",
         fullWidth && "w-full",
