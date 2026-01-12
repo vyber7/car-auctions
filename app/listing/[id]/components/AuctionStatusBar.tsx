@@ -169,25 +169,12 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
             )}
             <div className="flex flex-row gap-2 md:gap-4 justify-end items-center">
               {/*user can end the auction if they are the owner*/}
-              {currentUser == listing.userId ? (
+              {currentUser !== listing.userId && (
                 <>
-                  {/* {!canEndAuction(timeLeft) && (
-                <div className="mb-2 text-sm text-center text-gray-600">
-                  (You can end the auction if less than 3 hours remain.)
-                </div>
-              )} */}
-                  <Button
-                    type="submit"
-                    onClick={endAuction}
-                    disabled={isLoading || timeLeft !== "ENDING..."}
-                  >
-                    End Auction
-                  </Button>
+                  <Link href="#bids" className="">
+                    <RiAuctionLine className="cursor-pointer text-lg text-lime-500 hover:text-lime-600" />
+                  </Link>
                 </>
-              ) : (
-                <Link href="#bids" className="">
-                  <RiAuctionLine className="cursor-pointer text-lg text-lime-500 hover:text-lime-600" />
-                </Link>
               )}
               <Link href="#comments" className="">
                 <FaRegCommentAlt className="cursor-pointer text-lg text-blue-500 hover:text-blue-600" />
@@ -205,6 +192,11 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
                   />
                 ))}
             </div>
+            {canEndAuction(timeLeft) && currentUser === listing.userId && (
+              <Button disabled={isLoading} onClick={endAuction} fullWidth>
+                {isLoading ? "Ending..." : "End Auction Now"}
+              </Button>
+            )}
           </div>
         </div>
       ) : listing.status === "ENDED" ? (

@@ -203,8 +203,11 @@ function Header(): JSX.Element {
                     <span className="p-1 align-text-bottom text-sm font-bold ">
                       {user.email}
                     </span>
-                    <div className="lg:hidden py-1.5 grow font-bold flex justify-end">
-                      <AiOutlineClose onClick={() => void closeNavbar()} />
+                    <div
+                      className="lg:hidden py-1.5 grow font-bold flex justify-end"
+                      onClick={() => void closeNavbar()}
+                    >
+                      <AiOutlineClose className="" />
                     </div>
                   </label>
                   <input
@@ -244,8 +247,11 @@ function Header(): JSX.Element {
                   Home
                 </Link>
                 {!user && (
-                  <div className="lg:hidden flex items-center">
-                    <AiOutlineClose onClick={() => void closeNavbar()} />
+                  <div
+                    className="lg:hidden flex items-center"
+                    onClick={() => void closeNavbar()}
+                  >
+                    <AiOutlineClose className="pl-4 text-3xl" />
                   </div>
                 )}
               </div>

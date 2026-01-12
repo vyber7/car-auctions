@@ -15,7 +15,7 @@ const useCountDown = (targetDate: Date, listingId?: string) => {
       const distance = targetDateState.getTime() - now.getTime();
 
       if (distance <= 0) {
-        setTimeLeft("ENDING...");
+        setTimeLeft("Ending...");
         clearInterval(interval);
         return;
       }

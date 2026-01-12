@@ -34,7 +34,7 @@ export function formatDateTime(date: Date) {
 
 // Determine if auction can be ended based on time left
 export const canEndAuction = (timeLeft: string) => {
-  if (timeLeft === "ENDING...") {
+  if (timeLeft === "Ending...") {
     return true;
   }
   const hoursMatch = timeLeft.match(/^(\d+)h/);
@@ -68,7 +68,7 @@ export const canEndAuction = (timeLeft: string) => {
 // Display time left in HH:MM:SS format
 export const formatTimeLeft = (totalSeconds: number) => {
   if (totalSeconds <= 0) {
-    return "ENDING...";
+    return "Ending...";
   }
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.floor((totalSeconds % 3600) / 60);
