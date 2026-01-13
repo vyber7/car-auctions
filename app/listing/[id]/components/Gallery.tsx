@@ -60,19 +60,19 @@ const Gallery: React.FC<GalleryProps> = ({ listingId, userId, owner }) => {
     <div className="rounded-md shadow-md shadow-gray-400 p-2 md:p-4 bg-white">
       <div
         className={clsx(
-          images.length ? "block" : "hidden",
-          " flex flex-wrap justify-start gap-2"
+          images.length ? "grid" : "hidden",
+          "grid-cols-3 md:grid-cols-4 gap-2 lg:gap-4"
         )}
       >
         {images.map((imageUrl) => (
           <CldImage
             key={imageUrl}
-            width={110}
-            height={110}
+            width={200}
+            height={150}
             crop="fill"
             src={imageUrl}
             alt="Uploaded Image"
-            className="rounded-md"
+            className="rounded-md w-fit object-cover"
           />
         ))}
       </div>

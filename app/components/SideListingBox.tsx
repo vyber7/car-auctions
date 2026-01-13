@@ -39,7 +39,7 @@ const SideListingBox: React.FC<SideListingBoxProps> = ({
   }, [auction.id]);
 
   return (
-    <div className="w-[31%] lg:w-full rounded-md shadow-md shadow-gray-600 hover:ring hover:ring-gray-900">
+    <div className="rounded-md shadow-md shadow-gray-600 hover:ring hover:ring-gray-900">
       <Link href={`/listing/${auction.id}`} className="relative">
         <div className="absolute w-full">
           {variant === "live" && (

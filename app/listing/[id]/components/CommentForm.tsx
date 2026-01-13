@@ -68,7 +68,7 @@ const Form: React.FC<FormProps> = ({ listingId }) => {
           >
             <MdSend className="text-2xl" />
           </button>
-          <div className="hidden absolute right-0 top-[-40px] text-rose-500 peer-hover:block">
+          <div className="hidden absolute right-0 -top-8 md:-top-10 text-rose-500 peer-hover:block">
             Please, log in
           </div>
         </>
