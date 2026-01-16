@@ -4,6 +4,7 @@ import axios from "axios";
 import { CldImage, CldUploadButton } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
+import { FaRegEdit } from "react-icons/fa";
 
 interface CoverImageProps {
   listingId: string;
@@ -53,9 +54,16 @@ const CoverImage: React.FC<CoverImageProps> = ({ listingId, url, owner }) => {
           }}
           onSuccess={handleUpload}
           uploadPreset="auctions"
-          className="p-2 mt-2 lg:mt-4 text-blue-500 bg-white rounded-md w-fit"
+          className="absolute top-2 right-2 md:top-4 md:right-4 text-blue-500 bg-white rounded-md w-fit"
         >
-          {imageUrl ? "Edit Cover Image" : "Add Cover Image"}
+          {imageUrl ? (
+            <div className="flex items-center gap-1">
+              <FaRegEdit />
+              <span>Edit Image</span>
+            </div>
+          ) : (
+            "Add Cover Image"
+          )}
         </CldUploadButton>
       )}
     </>

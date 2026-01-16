@@ -53,12 +53,17 @@ const Form: React.FC<FormProps> = ({ listingId }) => {
         placeholder="Leave a comment"
       />
       {data ? (
-        <button
-          type="submit"
-          className="px-2 text-blue-500 hover:text-blue-600"
-        >
-          <MdSend className="text-2xl" />
-        </button>
+        <>
+          <button
+            type="submit"
+            className="px-2 text-blue-500 hover:text-blue-600"
+          >
+            <MdSend className="text-2xl" />
+          </button>
+          <div className="absolute -top-7 md:-top-10 right-0 text-rose-500">
+            {errors.comment && <span>This field is required</span>}
+          </div>
+        </>
       ) : (
         <>
           <button
@@ -68,7 +73,8 @@ const Form: React.FC<FormProps> = ({ listingId }) => {
           >
             <MdSend className="text-2xl" />
           </button>
-          <div className="hidden absolute right-0 -top-8 md:-top-10 text-rose-500 peer-hover:block">
+
+          <div className="hidden absolute right-0 -top-7 md:-top-10 text-rose-500 peer-hover:block">
             Please, log in
           </div>
         </>

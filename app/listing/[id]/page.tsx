@@ -80,7 +80,7 @@ const Listing = async (props: Params) => {
       <main className="w-full lg:w-10/12 lg:p-0 rounded-md">
         {/* <Views listingId={id} /> */}
         <div className="flex flex-col justify-between gap-2 rounded-t lg:rounded-l lg:gap-4">
-          <div>
+          <div className="relative">
             <Title year={year} make={make} model={model} large />
             <CoverImage
               listingId={listing.id}

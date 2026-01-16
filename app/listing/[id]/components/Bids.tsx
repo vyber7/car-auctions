@@ -5,7 +5,7 @@ import { Bid, Listing, User } from "@prisma/client";
 import axios from "axios";
 import clsx from "clsx";
 import { useSession } from "next-auth/react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "react-hot-toast";
 import { formatAmount, capitalize } from "@/app/utils/format";
@@ -78,15 +78,15 @@ const Bids: React.FC<BidsProps> = ({
   return (
     <div
       id="bids"
-      className="p-2 md:p-4 border shadow-md rounded-md shadow-gray-400 bg-white"
+      className="p-2 md:p-4 border shadow-md rounded-md text-sm md:text-base shadow-gray-400 bg-white"
     >
-      <h2 className="text-lg font-bold">
+      <h2 className="pb-2 md:pb-4 text-lg font-bold">
         {listing.year} {capitalize(listing.make)} {capitalize(listing.model)}
       </h2>
       <div className="flex flex-col md:flex-row gap-2 md:justify-between pb-2 md:pb-4">
-        <div>
+        <div className="md:w-1/2 w-full flex flex-col justify-between bg-slate-200 rounded-md p-2 md:p-4 gap-2 text-sm md:text-base">
           {listing.status === "ENDED" && listing.result === "SOLD" ? (
-            <p>
+            <p className="text-green-600 font-bold">
               {listing.currentBid
                 ? `Sold to ${
                     listing.highestBidderId
@@ -106,7 +106,11 @@ const Bids: React.FC<BidsProps> = ({
             <p>Reserve not met, bid to</p>
           ) : (
             <p>
-              {listing.currentBid ? "Current Bid" : "Starting at"}{" "}
+              {listing.currentBid ? (
+                <span>Current Bid</span>
+              ) : (
+                <span>Starting at</span>
+              )}{" "}
               <span className="font-semibold">
                 {listing.highestBidderId
                   ? capitalize(
@@ -159,24 +163,27 @@ const Bids: React.FC<BidsProps> = ({
         sellerEmail !== session?.user?.email ? (
         <form
           onSubmit={handleSubmit(onSubmit)}
-          className="border flex border-gray-300 rounded-md has-[:focus]:ring has-[:focus]:ring-lime-500 hover:ring hover:ring-lime-500"
+          className="relative border flex border-gray-300 rounded-md has-[:focus]:ring has-[:focus]:ring-lime-500 hover:ring hover:ring-lime-500"
         >
           <input
             id="bidAmount"
             type="number"
-            placeholder="Your Bid"
+            placeholder="Place a Bid"
             {...register("bidAmount", { required: true })}
             className={clsx(
               `w-full form-input
               block rounded-l-md
               
               text-gray-900
+              font-semibold
               shadow-sm                  
               focus:border-transparent
               border-none
               focus:ring-transparent
-                       
-              placeholder:text-gray-400
+               text-right        
+              placeholder:text-gray-400 
+              placeholder:font-normal
+              placeholder:text-left
               `,
               errors.bidAmount && "border-rose-500 focus:ring-rose-500",
               isLoading && "opacity-50 cursor-not-allowed"
@@ -201,12 +208,17 @@ const Bids: React.FC<BidsProps> = ({
           >
             <RiAuctionFill className="text-2xl" />
           </button>
-          <div>{errors.bidAmount && <span>This field is required</span>}</div>
+          <div className="absolute -top-7 md:-top-10 right-0 text-rose-500">
+            {errors.bidAmount && <span>This field is required</span>}
+          </div>
         </form>
       ) : !session ? (
-        <div className="mt-4 text-red-500 font-bold">
-          Please log in to place a bid.
-        </div>
+        <>
+          <hr />
+          <div className="text-rose-500 mt-2 md:mt-4 text-center">
+            Please log in to place a bid.
+          </div>
+        </>
       ) : null}
     </div>
   );
