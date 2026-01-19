@@ -143,7 +143,7 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
       {listing.status === "LIVE" ? (
         <div className="sticky top-11 z-[99] text-xs md:text-sm lg:text-base bg-gray-900 text-white rounded-md shadow-md shadow-gray-400">
           <ProgressBar endTime={listing.auctionEndsAt} listingId={listing.id} />
-          <div className="flex flex-row flex-wrap gap-2 justify-between items-center p-2 ">
+          <div className="flex flex-row flex-wrap gap-2 justify-between items-center p-2 lg:p-4">
             {/* <span className="inline-block px-4 py-2  font-semibold text-white bg-red-600 rounded-md">
               LIVE
             </span> */}
