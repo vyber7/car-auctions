@@ -13,10 +13,15 @@ import { pusherClient } from "@/app/libs/pusher";
 import { User } from "next-auth";
 import { Bid } from "@prisma/client";
 import ProgressBar from "./ProgressBar";
-import { FaHashtag, FaRegClock, FaRegCommentAlt } from "react-icons/fa";
+import {
+  FaHashtag,
+  FaRegClock,
+  FaCommentAlt,
+  FaRegCommentAlt,
+} from "react-icons/fa";
 import Link from "next/link";
 import { GoStar, GoStarFill } from "react-icons/go";
-import { RiAuctionLine } from "react-icons/ri";
+import { RiAuctionFill, RiAuctionLine } from "react-icons/ri";
 import toast from "react-hot-toast";
 
 interface AuctionStatusBarProps {
@@ -37,7 +42,7 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [bid, setBid] = useState<number | null>(listing.currentBid);
   const [watching, setWatching] = useState<boolean>(
-    listing.watchersIds.includes(currentUser as string)
+    listing.watchersIds.includes(currentUser as string),
   );
   const timeLeft = useCountDown(listing.auctionEndsAt as Date, listing.id);
   const router = useRouter();
@@ -138,15 +143,15 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
       {listing.status === "LIVE" ? (
         <div className="sticky top-11 z-[99] text-xs md:text-sm lg:text-base bg-gray-900 text-white rounded-md shadow-md shadow-gray-400">
           <ProgressBar endTime={listing.auctionEndsAt} listingId={listing.id} />
-          <div className="flex flex-row flex-wrap gap-2 justify-between items-center p-2 lg:p-4">
+          <div className="flex flex-row flex-wrap gap-2 justify-between items-center p-2 ">
             {/* <span className="inline-block px-4 py-2  font-semibold text-white bg-red-600 rounded-md">
               LIVE
             </span> */}
 
             <span
               className={clsx(
-                `font-bold flex items-center gap-1`,
-                canEndAuction(timeLeft) && "text-red-600"
+                `flex items-center gap-1`,
+                canEndAuction(timeLeft) && "text-red-600",
               )}
             >
               <b>
@@ -167,30 +172,42 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
                 </span>
               </>
             )}
-            <div className="flex flex-row gap-2 md:gap-4 justify-end items-center">
+            <div
+              className={clsx(
+                "flex flex-row justify-end items-center font-light",
+                currentUser === listing.userId ? "gap-0" : "gap-4",
+              )}
+            >
               {/*user can end the auction if they are the owner*/}
               {currentUser !== listing.userId && (
                 <>
-                  <Link href="#bids" className="">
-                    <RiAuctionLine className="cursor-pointer text-lg text-lime-500 hover:text-lime-600" />
+                  <Link href="#bids" className="group flex items-center gap-1">
+                    <span className="hidden md:inline">Bid</span>
+                    <RiAuctionLine className="text-base lg:text-lg text-lime-500 group-hover:text-lime-600" />
                   </Link>
                 </>
               )}
-              <Link href="#comments" className="">
-                <FaRegCommentAlt className="cursor-pointer text-lg text-blue-500 hover:text-blue-600" />
+              <Link href="#comments" className="group flex items-center gap-1">
+                <span className="hidden md:inline">Comment</span>
+                <FaRegCommentAlt className="text-base lg:text-lg text-blue-500 group-hover:text-blue-600" />
               </Link>
-              {currentUser !== listing.userId &&
-                (watching ? (
-                  <GoStarFill
-                    onClick={toggleWatchList}
-                    className="cursor-pointer text-lg text-yellow-500 hover:text-yellow-600"
-                  />
-                ) : (
-                  <GoStar
-                    onClick={toggleWatchList}
-                    className="cursor-pointer text-lg text-yellow-500 hover:text-yellow-600"
-                  />
-                ))}
+              <div
+                className="cursor-pointer group flex items-center gap-1"
+                onClick={toggleWatchList}
+              >
+                {currentUser !== listing.userId &&
+                  (watching ? (
+                    <>
+                      <span className="hidden md:inline">Unwatch</span>
+                      <GoStarFill className="text-lg lg:text-xl text-yellow-500 group-hover:text-yellow-600" />
+                    </>
+                  ) : (
+                    <>
+                      <span className="hidden md:inline">Watch</span>
+                      <GoStar className="text-lg lg:text-xl text-yellow-500 group-hover:text-yellow-600" />
+                    </>
+                  ))}
+              </div>
             </div>
             {canEndAuction(timeLeft) && currentUser === listing.userId && (
               <Button disabled={isLoading} onClick={endAuction} fullWidth>
