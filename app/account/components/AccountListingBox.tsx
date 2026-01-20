@@ -8,7 +8,7 @@ import axios from "axios";
 import toast from "react-hot-toast";
 import Title from "../../components/Title";
 import { Listing, User } from "@prisma/client";
-import { formatAmount, canEndAuction } from "@/app/utils/format";
+import { formatAmount, isLessThan3Hours } from "@/app/utils/format";
 import clsx from "clsx";
 import { FaRegClock } from "react-icons/fa";
 import useCountDown from "@/app/hooks/useCountDown";
@@ -43,14 +43,14 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
 
   return (
     <div className="flex flex-wrap justify-start bg-white rounded-md shadow-md shadow-gray-400 transition-all hover:ring hover:ring-gray-900">
-      <div className="flex flex-col w-1/2 md:w-1/4">
+      <div className="flex flex-col w-1/2">
         <Link className="w-full" href={`/listing/${listing.id}`}>
           {listing.coverImage ? (
             <CldImage
               src={listing.coverImage}
               alt="listing Image"
               width={250}
-              height={150}
+              height={170}
               className="w-full object-cover rounded-tl-md"
               priority={true}
               crop="fill"
@@ -60,7 +60,7 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
               src="/images/default-vehicle-image.png"
               alt="listing Image"
               width={250}
-              height={150}
+              height={170}
               className="w-full object-cover rounded-tl-md"
               priority={true}
             />
@@ -90,7 +90,7 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
                 <FaRegClock />{" "}
                 <span
                   className={clsx(
-                    canEndAuction(timeLeft) ? "text-red-600" : ""
+                    isLessThan3Hours(timeLeft) ? "text-red-600" : "",
                   )}
                 >
                   {timeLeft}
@@ -110,7 +110,7 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
           )}
         </div>
       </div>
-      <div className="flex flex-col w-1/2 md:w-3/4">
+      <div className="flex flex-col w-1/2">
         <div className="flex justify-between">
           <Link className="" href={`/listing/${listing.id}`}>
             <Title
@@ -132,9 +132,9 @@ const AccountListingBox: React.FC<AccountListingBoxProps> = ({
             </button>
           )}
         </div>
-        <div className="text-xs md:text-sm p-2 pt-0">
+        <div className="text-xs p-2 pt-0">
           6-Speed Manual, V12 Power, California-Owned, Some Modifications
-          <span className="block text-gray-500">Santa Cruz, CA 95060</span>
+          <span className="block text-gray-500">{listing.location}</span>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Bid, Listing, User } from "@prisma/client";
-import { canEndAuction, formatAmount } from "@/app/utils/format";
+import { formatAmount, isLessThan3Hours } from "@/app/utils/format";
 import { CldImage } from "next-cloudinary";
 import { FaRegClock } from "react-icons/fa";
 import clsx from "clsx";
@@ -49,7 +49,7 @@ const SideListingBox: React.FC<SideListingBoxProps> = ({
                 <FaRegClock />{" "}
                 <span
                   className={clsx(
-                    canEndAuction(timeLeft) ? "text-red-600" : ""
+                    isLessThan3Hours(timeLeft) ? "text-red-600" : "",
                   )}
                 >
                   {timeLeft}

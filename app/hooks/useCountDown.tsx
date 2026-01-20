@@ -22,19 +22,19 @@ const useCountDown = (targetDate: Date, listingId?: string) => {
       const weeks = Math.floor(distance / (1000 * 60 * 60 * 24 * 7));
       const days = Math.floor(distance / (1000 * 60 * 60 * 24));
       const hours = Math.floor(
-        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
       );
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
       if (weeks > 0) {
-        setTimeLeft(`${weeks}w ${days}d ${hours}h ${minutes}m ${seconds}s`);
+        setTimeLeft(`${weeks}w`); // ${days}d ${hours}h ${minutes}m ${seconds}s`);
       } else if (days > 0) {
-        setTimeLeft(`${days}d ${hours}h ${minutes}m ${seconds}s`);
+        setTimeLeft(`${days}d`); // ${hours}h ${minutes}m ${seconds}s`);
       } else if (hours > 0) {
-        setTimeLeft(`${hours}h ${minutes}m ${seconds}s`);
+        setTimeLeft(`${hours}h : ${minutes}m : ${seconds}s`);
       } else if (minutes > 0) {
-        setTimeLeft(`${minutes}m ${seconds}s`);
+        setTimeLeft(`${minutes}m : ${seconds}s`);
       } else {
         setTimeLeft(`${seconds}s`);
       }

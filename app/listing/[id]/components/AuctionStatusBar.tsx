@@ -3,7 +3,7 @@
 import { Listing } from "@prisma/client";
 import { useCallback, useEffect, useState } from "react";
 import axios from "axios";
-import { formatAmount } from "@/app/utils/format";
+import { formatAmount, isLessThan3Hours } from "@/app/utils/format";
 import Button from "@/app/components/Button";
 import useCountDown from "@/app/hooks/useCountDown";
 import clsx from "clsx";
@@ -151,7 +151,7 @@ const AuctionStatusBar: React.FC<AuctionStatusBarProps> = ({
             <span
               className={clsx(
                 `flex items-center gap-1`,
-                canEndAuction(timeLeft) && "text-red-600",
+                isLessThan3Hours(timeLeft) && "text-red-600",
               )}
             >
               <b>

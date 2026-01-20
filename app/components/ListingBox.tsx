@@ -11,7 +11,7 @@ import { GrEdit } from "react-icons/gr";
 import { FaRegClock } from "react-icons/fa";
 import { Listing, User } from "@prisma/client";
 import useCountDown from "../hooks/useCountDown";
-import { formatAmount, canEndAuction } from "../utils/format";
+import { formatAmount, isLessThan3Hours } from "../utils/format";
 import { clsx } from "clsx";
 import { CldImage } from "next-cloudinary";
 import { pusherClient } from "../libs/pusher";
@@ -23,7 +23,7 @@ interface ListingBoxProps {
 
 const ListingBox: React.FC<ListingBoxProps> = ({ listing, currentUser }) => {
   const [watching, setWatching] = useState<boolean>(
-    listing.watchersIds.includes(currentUser?.id as string)
+    listing.watchersIds.includes(currentUser?.id as string),
   );
 
   const [bid, setBid] = useState<number | null>(listing.currentBid);
@@ -157,7 +157,7 @@ const ListingBox: React.FC<ListingBoxProps> = ({ listing, currentUser }) => {
                 <FaRegClock />{" "}
                 <span
                   className={clsx(
-                    canEndAuction(timeLeft) ? "text-red-600" : ""
+                    isLessThan3Hours(timeLeft) ? "text-red-600" : "",
                   )}
                 >
                   {timeLeft}
