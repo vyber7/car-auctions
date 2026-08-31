@@ -1,6 +1,6 @@
-# Car Auctions Platform
+# Auto Auctions
 
-A modern, real-time car auction platform built with Next.js 15, TypeScript, Prisma, and Pusher for live updates. Users can browse, bid, and sell vehicles in real-time auctions with live countdown timers and instant notifications.
+A modern, real-time auto auction platform built with Next.js 15, TypeScript, Prisma, and Pusher for live updates. Users can browse, bid, and sell vehicles in real-time auctions with live countdown timers and instant notifications.
 
 ## 🌟 Features
 
@@ -46,7 +46,7 @@ A modern, real-time car auction platform built with Next.js 15, TypeScript, Pris
 
 ```bash
 git clone <repository-url>
-cd app-car-auctions
+cd auto-auctions
 npm install
 ```
 
@@ -56,7 +56,7 @@ Create `.env.local`:
 
 ```env
 # Database
-DATABASE_URL=mongodb+srv://user:password@cluster.mongodb.net/car-auctions
+DATABASE_URL=mongodb+srv://user:password@cluster.mongodb.net/auto-auctions
 
 # NextAuth
 NEXTAUTH_SECRET=your-secret-key-here
@@ -94,7 +94,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## 📁 Project Structure
 
 ```TypeScript
-app-car-auctions/
+auto-auctions/
 ├── app/
 │   ├── api/                 # API routes
 │   ├── components/          # Reusable React components
